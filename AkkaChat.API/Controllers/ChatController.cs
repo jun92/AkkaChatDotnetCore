@@ -1,3 +1,4 @@
+using System.Net.WebSockets;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AkkaChat.API.Controllers;
@@ -11,10 +12,18 @@ public class ChatController : ControllerBase
     {
         _logger = logger;
     }
-    [HttpGet("/connect")]
+    [HttpGet("/ws/connect")]
     public async Task<ActionResult> Connect()
     {
-        await Task.CompletedTask;
-        return Ok("Success");
+        if (HttpContext.WebSockets.IsWebSocketRequest)
+        {
+            WebSocket webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
+            await Task.CompletedTask;
+            return Ok("Terminated");
+        }
+        else 
+        {
+            return BadRequest("This is for websocket");
+        }
     }
 }
