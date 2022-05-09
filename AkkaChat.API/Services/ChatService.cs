@@ -14,4 +14,12 @@ public class ChatService
     {
         _chatSession.Add(newWebSocket, new ChatSession(newWebSocket));
     }
+
+    public void Echo()
+    {
+        foreach(var chat in _chatSession)
+        {
+            chat.Value.SendEcho();
+        }
+    }
 }

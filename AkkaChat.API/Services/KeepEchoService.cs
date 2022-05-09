@@ -14,7 +14,8 @@ public class KeepEchoService : IHostedService
         int i = 0;
         while(!cancellationToken.IsCancellationRequested)
         {
-            Console.WriteLine($"Start({i++}) - cancelRequests{cancellationToken.IsCancellationRequested}");
+            _chatService.Echo();
+            // Console.WriteLine($"Start({i++}) - cancelRequests{cancellationToken.IsCancellationRequested}");
             await Task.Delay(1000);
         }
     }
